@@ -15,8 +15,12 @@ export const handleSignup = async (name, description, email, password) => {
 
     try {
         const response = await fetch(`${apiUrl}/v1/user`, requestOptions);
-        const result = await response.text();
-        return { success: true, data: result };
+        const result = await response.json();
+        if (response.ok) {
+            return { success: true, data: result };
+        } else {
+            return { success: false, error: result };
+        }
     } catch (error) {
         console.error('Error during user creation:', error);
         return { success: false, error };

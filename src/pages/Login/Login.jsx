@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import { useSnackbar } from "notistack";
 
 //MUI
@@ -31,15 +31,11 @@ const Login = () => {
         }
         try {
             setLoading(true);
-            // const { success, data, error } = await handleLogin(email, password);
-
-            let success = true;
+            const { success, data, error } = await handleLogin(email, password);
 
             if (success) {
-                // console.log(data);
-                localStorage.setItem("access-token", "abab")
-
-                // Handle success (e.g., redirect user or update state)
+                localStorage.setItem("access-token", data?.accessToken)
+                localStorage.setItem("user-name", data?.user?.name)
                 enqueueSnackbar("Login Successful", {
                     variant: "success",
                 });

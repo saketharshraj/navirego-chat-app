@@ -32,10 +32,7 @@ const Index = () => {
         }
         try {
             setLoading(true);
-            // const { success, data, error } = await handleSignup(name, description, email, password);
-
-            let success = true;
-
+            const { success, data, error } = await handleSignup(name, description, email, password);
             if (success) {
                 enqueueSnackbar("Signup Successful", {
                     variant: "success",

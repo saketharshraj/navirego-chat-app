@@ -81,15 +81,13 @@ const Navbar = () =>  {
                                 },
                             }}
                         >
-                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px", "&:hover": {
-                                    backgroundColor: "hsla(0,0%,100%,.1)",
-                                }, }}>FAQ</MenuItem>
-                            {/*<MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>Support</MenuItem>*/}
+                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>FAQ</MenuItem>
+                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>Support</MenuItem>
                             <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>About Us</MenuItem>
                             <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>Privacy Policy</MenuItem>
                             <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>Term & Conditions</MenuItem>
                             <MenuItem
-                                sx={{ py: 1, color: "red", fontSize: "14px" }}
+                                sx={{ py: 1, color: 'red' }}
                                 onClick={ () => {
                                     localStorage.removeItem("access-token")
                                     navigate("/login")

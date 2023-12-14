@@ -14,8 +14,12 @@ export const handleLogin = async (email, password) => {
 
     try {
         const response = await fetch(`${apiUrl}/authentication`, requestOptions);
-        const result = await response.text();
-        return { success: true, data: result };
+        const result = await response.json();
+        if (response.ok) {
+            return { success: true, data: result };
+        } else {
+            return { success: false, error: result };
+        }
     } catch (error) {
         console.error('Error during login:', error);
         return { success: false, error };

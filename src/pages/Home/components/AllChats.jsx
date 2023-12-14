@@ -12,8 +12,8 @@ const AllChats = ({p, br, height, chats, current, setCurrent, chatLoading, allCh
                         queryList.map((each, index) => (
                             <Box
                                 key={index}
-                                width={"100%"} mb={2}
-                                p={"8px"}
+                                width={"100%"} mb={0.5}
+                                py={"8px"} px={"12px"}
                                 borderRadius={"8px"}
                                 color={"#FFF"}
                                 sx={{
