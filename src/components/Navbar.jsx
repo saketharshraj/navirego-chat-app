@@ -1,10 +1,10 @@
-import {AppBar, Box, Avatar, Hidden, Menu, MenuItem} from "@mui/material";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Box, Avatar, Menu, MenuItem} from "@mui/material";
+import {useLocation, useNavigate} from "react-router-dom";
 
-import Logo from '../assets/atlan-logo.svg'
+import Logo from '../assets/logo-dark.png'
 import Profile from '../assets/profile.jpg'
-import { navbarLinks } from '../constants/navbarLinks'
 import {useRef, useState} from "react";
+import {navbarMenu} from "../constants/navbarMenu";
 
 const Navbar = () =>  {
 
@@ -25,80 +25,62 @@ const Navbar = () =>  {
 
     return (
         <>
-            <AppBar
-                color={"transparent"}
-                elevation={0}
-                // position="fixed"
-                sx={{
-                    background: location.pathname === '/' ? 'transparent' : '#e5e5e5',
-                }}
-            >
-                <Box py={1.3} px={2} display={'flex'} alignItems={'center'} justifyContent={'space-between'} >
-                    <Link to={'/'}>
-                        <img src={Logo} alt={'Atlan logo'} height={'35px'} width={'auto'} />
-                    </Link>
-
-                    <Box display={'flex'} alignItems={'center'}>
-                        <Hidden mdDown>
-                            {
-                                navbarLinks.map((each, index) => (
-                                    <Link to={each.link} key={index} target={each?.target} style={{textDecoration: "none"}}>
-                                        <Box
-                                            ml={3} color={location.pathname === each.link ? "#f05" : "#2026d2"}
-                                            fontSize={'16px'} fontWeight={600}
-                                            sx={{
-                                                "&:hover": {
-                                                    color: "#f05",
-                                                },
-                                            }}
-                                        >
-                                            {each.title}
-                                        </Box>
-                                    </Link>
-                                ))
-                            }
-                        </Hidden>
-                        <Box ref={anchorRef} onClick={handleToggle}>
-                            <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2', marginLeft: "80px"}} />
-                        </Box>
-                        <Menu
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "right",
-                            }}
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            anchorEl={anchorRef.current}
-                            open={open}
-                            onClose={handleCloseMenu}
-                            sx={{
-                                "& .MuiPaper-root": {
-                                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.25)",
-                                    borderRadius: "15px 0px 15px 15px",
-                                    backgroundColor: "#000"
-                                },
-                            }}
-                        >
-                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>FAQ</MenuItem>
-                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>Support</MenuItem>
-                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>About Us</MenuItem>
-                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>Privacy Policy</MenuItem>
-                            <MenuItem sx={{ py: 1, color: "#FFF", fontSize: "14px" }}>Term & Conditions</MenuItem>
-                            <MenuItem
-                                sx={{ py: 1, color: 'red' }}
-                                onClick={ () => {
-                                    localStorage.removeItem("access-token")
-                                    navigate("/login")
-                                }}
-                            >
-                                Log Out
-                            </MenuItem>
-                        </Menu>
+            <Box p={2} display={'flex'} alignItems={'center'} justifyContent={'space-between'} width={"100%"} position={"absolute"} top={0} left={0}>
+                <Box display={'flex'} alignItems={'center'}>
+                    <img src={Logo} width={'30px'} />
+                    <Box fontWeight={550} fontSize={'18px'} ml={1}>
+                        Navirego Chat
                     </Box>
                 </Box>
-            </AppBar>
+
+                <Box>
+                    <Box ref={anchorRef} onClick={handleToggle}>
+                        <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2', marginLeft: "80px"}} />
+                    </Box>
+                    <Menu
+                        anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "right",
+                        }}
+                        transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                        }}
+                        anchorEl={anchorRef.current}
+                        open={open}
+                        onClose={handleCloseMenu}
+                        sx={{
+                            "& .MuiPaper-root": {
+                                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.25)",
+                                borderRadius: "15px 0px 15px 15px",
+                            },
+                        }}
+                    >
+                        {
+                            navbarMenu.map((each) => (
+                                <MenuItem
+                                    key={each}
+                                    sx={{
+                                        py: 1,
+                                        fontSize: "14px",
+                                    }}
+                                >
+                                    {each}
+                                </MenuItem>
+                            ))
+                        }
+                        <MenuItem
+                            sx={{ py: 1, color: "red", fontSize: "14px" }}
+                            onClick={ () => {
+                                localStorage.removeItem("access-token")
+                                navigate("/login")
+                            }}
+                        >
+                            Log Out
+                        </MenuItem>
+                    </Menu>
+                </Box>
+            </Box>
         </>
     );
 }
