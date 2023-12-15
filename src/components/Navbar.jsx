@@ -25,7 +25,7 @@ const Navbar = () =>  {
 
     return (
         <>
-            <Box p={2} display={'flex'} alignItems={'center'} justifyContent={'space-between'} width={"100%"} position={"absolute"} top={0} left={0}>
+            <Box bgcolor={"hsla(0,0%,100%,.95)"} p={2} pb={1} display={'flex'} alignItems={'center'} justifyContent={'space-between'} width={"100%"} position={"absolute"} top={0} left={0}>
                 <Box display={'flex'} alignItems={'center'}>
                     <img src={Logo} width={'30px'} />
                     <Box fontWeight={550} fontSize={'18px'} ml={1}>

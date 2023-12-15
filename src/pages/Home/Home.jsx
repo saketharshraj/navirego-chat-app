@@ -1,11 +1,14 @@
 import {useState, useEffect} from "react";
-import {Grid, Hidden, Box} from "@mui/material";
+import {Grid, Hidden, Box, Container, TextField, IconButton} from "@mui/material";
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import AddIcon from '@mui/icons-material/Add';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 
 import Navbar from "../../components/Navbar";
 import AllChats from "./components/AllChats";
-import Logo from "../../assets/logo-light.png";
-
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import NewChatButton from "./components/NewChatButton";
+import MessageInput from "./components/MessageInput";
 
 const Home = () =>  {
 
@@ -15,39 +18,18 @@ const Home = () =>  {
     const [allChatsLoading, setAllChatsLoading] = useState(false);
     const [chatLoading, setChatLoading] = useState(false)
 
+    const [query, setQuery] = useState("")
+    const [filePath, setFilePath] = useState(null);
+
+
     return (
         <>
-            {/*<Navbar />*/}
             <Grid container spacing={0} height={'auto'}>
                 <Hidden mdDown>
-                    <Grid item xs={0} md={3}>
-                        <Box width={"100%"} position={"relative"}>
-                            <Box p={2} width={"100%"} position={"absolute"} top={0} left={0}>
-                                <Box
-                                    width={"100%"} py={"8px"} px={"12px"}
-                                    borderRadius={"8px"} color={"#FFF"}
-                                    sx={{
-                                        cursor: "pointer",
-                                        backgroundColor: "hsla(0,0%,100%,.1)",
-                                        "&:hover": {
-                                            backgroundColor: "hsla(0,0%,100%,.1)",
-                                        },
-                                    }}
-                                    onClick={() => {
-                                        // if(setOpen) setOpen(false)
-                                    }}
-                                    className="chat-title"
-                                    display={"flex"} alignItems={'center'} justifyContent={'space-between'}
-                                >
-                                    <Box display={"flex"} alignItems={'center'}>
-                                        <img src={Logo} width={'25px'} />
-                                        <Box ml={2}>New Chat</Box>
-                                    </Box>
-                                   <EditNoteIcon />
-                                </Box>
-                            </Box>
+                    <Grid item xs={0} md={2.5}>
+                        <Box width={"100%"} height={"100vh"} position={"relative"}>
+                            <NewChatButton />
                             <AllChats
-                                p={1} br={"12px"} height={"calc(100vh - 130px)"}
                                 chats={chats} allChatsLoading={allChatsLoading}
                                 current={current} setCurrent={setCurrent}
                                 chatLoading={chatLoading}
@@ -57,9 +39,18 @@ const Home = () =>  {
                     </Grid>
                 </Hidden>
 
-                <Grid item xs={12} md={9}>
-                    <Box width={"100%"} position={"relative"}>
+                <Grid item xs={12} md={9.5}>
+                    <Box width={"100%"} height={"100vh"} position={"relative"}>
                         <Navbar />
+                        <Container maxWidth={"md"}>
+                            <Box pt={8} width={"100%"} bgcolor={"red"}>
+                                hello
+                            </Box>
+                        </Container>
+                        <MessageInput
+                            filePath={filePath}
+                            setFilePath={setFilePath}
+                        />
                     </Box>
                 </Grid>
             </Grid>

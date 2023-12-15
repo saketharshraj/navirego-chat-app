@@ -2,7 +2,7 @@ import {Box} from "@mui/material";
 import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
 
 import {queryList} from "../../../constants/queryList";
-const AllChats = ({p, br, height, chats, current, setCurrent, chatLoading, allChatsLoading, setOpen}) =>  {
+const AllChats = ({chats, current, setCurrent, chatLoading, allChatsLoading, setOpen}) =>  {
 
     return (
         <>
