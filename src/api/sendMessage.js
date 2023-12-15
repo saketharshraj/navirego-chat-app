@@ -1,6 +1,6 @@
 const apiUrl = 'http://localhost:5001/v1/message';
 
-export const sendMessage = async (message, messageType, chatId) => {
+export const sendMessage = async (message, messageType, chatId, fileUrl) => {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Authorization', `Bearer ${localStorage.getItem("access-token")}`);
@@ -10,8 +10,11 @@ export const sendMessage = async (message, messageType, chatId) => {
         messageType,
     };
 
-    if(chatId){
+    if(chatId.length > 0){
         raw = {...raw, chatId}
+    }
+    if(fileUrl){
+        raw = {...raw, fileUrl}
     }
 
     const requestOptions = {

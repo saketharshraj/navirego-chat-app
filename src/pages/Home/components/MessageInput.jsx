@@ -5,12 +5,13 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import {useSnackbar} from "notistack";
 import {uploadFile} from "../../../api/uploadFile";
 import {sendMessage} from "../../../api/sendMessage";
-const MessageInput = ({}) =>  {
+const MessageInput = ({current, messageListLength, setMessageList, setMessageListLength, setTotalMessageLength}) =>  {
 
     const { enqueueSnackbar } = useSnackbar();
 
     const [query, setQuery] = useState("")
     const [filePath, setFilePath] = useState(null);
+    const [chatId, setChatId] = useState(current?._id || "",);
 
     const fileInputRef = useRef(null);
     const [fileName, setFileName] = useState('');
@@ -27,9 +28,6 @@ const MessageInput = ({}) =>  {
 
     const handleFileInputChange = async  (event) => {
         const selectedFile = event.target.files[0];
-
-        console.log(selectedFile)
-
         if (selectedFile) {
             setFileName(selectedFile.name);
             try {
@@ -52,11 +50,33 @@ const MessageInput = ({}) =>  {
 
     const handleSendMessage = async () => {
 
-        const isFileAttached = filePath !== null;
+        const userInput = {
+            message: query,
+            messageType: filePath === null ? 120 : (query === "") ? 121 : 122,
+            fileUrl: filePath,
+        }
+
+        setMessageList((prevList) =>
+            [userInput, ...prevList]
+        );
 
         try {
             setLoading(true);
-            const messageResult = await sendMessage(isFileAttached ? filePath : query, isFileAttached ? 121 : 120, '657baa7a3b5b3dbc641e6646');
+            const messageResult = await sendMessage(
+                query,
+                filePath === null ? 120 : (query === "") ? 121 : 122,
+                chatId,
+                filePath
+            );
+
+
+            setTotalMessageLength(messageResult.data.messagesCount);
+            setMessageListLength(messageListLength + 2);
+
+            const { botResponse, ...userMessage } = messageResult.data;
+            setMessageList((prevList) =>
+                [botResponse, ...prevList]
+            );
 
             if (!messageResult.success) {
                 enqueueSnackbar('Failed to send message.', {
@@ -79,6 +99,7 @@ const MessageInput = ({}) =>  {
                         <input
                             type="file"
                             ref={fileInputRef}
+                            accept="image/*"
                             style={{ display: 'none' }}
                             onChange={handleFileInputChange}
                         />
@@ -100,7 +121,7 @@ const MessageInput = ({}) =>  {
                                             ) : (
                                                 <IconButton onClick={handleFileChange} disabled={loading}>
                                                     {
-                                                        loading ? <CircularProgress color={'secondary'} size={23.2}/> : <AttachFileIcon color={"secondary"} />
+                                                        (loading && fileName) ? <CircularProgress color={'secondary'} size={23.2}/> : <AttachFileIcon color={"secondary"} />
                                                     }
                                                 </IconButton>
                                             )

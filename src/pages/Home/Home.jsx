@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Grid, Hidden, Box, Container} from "@mui/material";
 
 import Navbar from "../../components/Navbar";
@@ -13,6 +13,10 @@ const Home = () =>  {
 
     const [current, setCurrent] = useState(null)
     const [chatLoading, setChatLoading] = useState(false)
+
+    useEffect(() => {
+        console.log(current)
+    }, [current]);
 
     return (
         <>
