@@ -4,9 +4,13 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import {useSnackbar} from "notistack";
 import {uploadFile} from "../../../api/uploadFile";
-const MessageInput = ({filePath, setFilePath}) =>  {
+import {sendMessage} from "../../../api/sendMessage";
+const MessageInput = ({}) =>  {
 
     const { enqueueSnackbar } = useSnackbar();
+
+    const [query, setQuery] = useState("")
+    const [filePath, setFilePath] = useState(null);
 
     const fileInputRef = useRef(null);
     const [fileName, setFileName] = useState('');
@@ -24,6 +28,8 @@ const MessageInput = ({filePath, setFilePath}) =>  {
     const handleFileInputChange = async  (event) => {
         const selectedFile = event.target.files[0];
 
+        console.log(selectedFile)
+
         if (selectedFile) {
             setFileName(selectedFile.name);
             try {
@@ -31,7 +37,7 @@ const MessageInput = ({filePath, setFilePath}) =>  {
                 const uploadResult = await uploadFile(selectedFile);
 
                 console.log(uploadResult)
-                setFilePath(uploadResult.path)
+                setFilePath(uploadResult.data.path[0])
 
                 if (!uploadResult.success) {
                     enqueueSnackbar("Something went wrong.", {
@@ -44,12 +50,43 @@ const MessageInput = ({filePath, setFilePath}) =>  {
         }
     };
 
+    const handleSendMessage = async () => {
+
+        const isFileAttached = filePath !== null;
+
+        try {
+            setLoading(true);
+            const messageResult = await sendMessage(isFileAttached ? filePath : query, isFileAttached ? 121 : 120, '657baa7a3b5b3dbc641e6646');
+
+            if (!messageResult.success) {
+                enqueueSnackbar('Failed to send message.', {
+                    variant: 'error',
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+
+        setQuery("");
+        handleDelete();
+    };
+
     return (
         <>
-            <Box width={"100%"} position={"absolute"} bgcolr={"#FFF"} bottom={0} left={0}>
+            <Box width={"100%"} position={"absolute"} bottom={0} left={0} sx={{backgroundColor: "#FFF"}}>
                 <Container maxWidth={"md"}>
                     <Box width={"100%"} textAlign={"center"}>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileInputChange}
+                        />
                         <TextField
+                            value={query}
+                            onChange={(event) => {
+                                setQuery(event.target.value);
+                            }}
                             color={"secondary"}
                             multiline
                             variant="outlined"
@@ -57,12 +94,6 @@ const MessageInput = ({filePath, setFilePath}) =>  {
                             InputProps={{
                                 endAdornment: (
                                     <Box display={"flex"} alignItems={"flex-end"}>
-                                        <input
-                                            type="file"
-                                            ref={fileInputRef}
-                                            style={{ display: 'none' }}
-                                            onChange={handleFileInputChange}
-                                        />
                                         {
                                             (filePath !== null && fileName.length > 0) ? (
                                                 <Chip label={fileName} variant={"outlined"} onDelete={handleDelete} />
@@ -75,7 +106,7 @@ const MessageInput = ({filePath, setFilePath}) =>  {
                                             )
                                         }
 
-                                        <IconButton>
+                                        <IconButton onClick={handleSendMessage} disabled={loading}>
                                             <ArrowUpwardIcon color={"secondary"} />
                                         </IconButton>
                                     </Box>

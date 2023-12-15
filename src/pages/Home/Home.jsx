@@ -1,14 +1,11 @@
-import {useState, useEffect} from "react";
-import {Grid, Hidden, Box, Container, TextField, IconButton} from "@mui/material";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import AddIcon from '@mui/icons-material/Add';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import FileOpenIcon from '@mui/icons-material/FileOpen';
+import {useState} from "react";
+import {Grid, Hidden, Box, Container} from "@mui/material";
 
 import Navbar from "../../components/Navbar";
 import AllChats from "./components/AllChats";
 import NewChatButton from "./components/NewChatButton";
 import MessageInput from "./components/MessageInput";
+import Messages from "./components/Messages";
 
 const Home = () =>  {
 
@@ -16,10 +13,6 @@ const Home = () =>  {
 
     const [current, setCurrent] = useState(null)
     const [chatLoading, setChatLoading] = useState(false)
-
-    const [query, setQuery] = useState("")
-    const [filePath, setFilePath] = useState(null);
-
 
     return (
         <>
@@ -40,15 +33,11 @@ const Home = () =>  {
                 <Grid item xs={12} md={9.5}>
                     <Box width={"100%"} height={"100vh"} position={"relative"}>
                         <Navbar />
-                        <Container maxWidth={"md"}>
-                            <Box pt={8} width={"100%"} bgcolor={"red"}>
-                                hello
-                            </Box>
-                        </Container>
-                        <MessageInput
-                            filePath={filePath}
-                            setFilePath={setFilePath}
+                        <Messages
+                            current={current}
+                            chatLoading={chatLoading} setChatLoading={setChatLoading}
                         />
+
                     </Box>
                 </Grid>
             </Grid>
