@@ -1,4 +1,5 @@
 import {Box, Avatar, Menu, MenuItem} from "@mui/material";
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 import {useLocation, useNavigate} from "react-router-dom";
 
 import Logo from '../assets/logo-dark.png'
@@ -33,9 +34,10 @@ const Navbar = () =>  {
                     </Box>
                 </Box>
 
-                <Box>
-                    <Box ref={anchorRef} onClick={handleToggle}>
-                        <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2', marginLeft: "80px"}} />
+                <Box display={"flex"} alignItems={"center"}>
+                    <FileOpenIcon color={"secondary"} />
+                    <Box ml={4} ref={anchorRef} onClick={handleToggle}>
+                        <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2'}} />
                     </Box>
                     <Menu
                         anchorOrigin={{

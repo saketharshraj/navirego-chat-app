@@ -15,7 +15,6 @@ const Home = () =>  {
     const [chats, setChats] = useState([])
 
     const [current, setCurrent] = useState(null)
-    const [allChatsLoading, setAllChatsLoading] = useState(false);
     const [chatLoading, setChatLoading] = useState(false)
 
     const [query, setQuery] = useState("")
@@ -30,12 +29,11 @@ const Home = () =>  {
                         <Box width={"100%"} height={"100vh"} position={"relative"}>
                             <NewChatButton />
                             <AllChats
-                                chats={chats} allChatsLoading={allChatsLoading}
+                                chats={chats} setChats={setChats}
                                 current={current} setCurrent={setCurrent}
                                 chatLoading={chatLoading}
                             />
                         </Box>
-
                     </Grid>
                 </Hidden>
 

@@ -84,7 +84,7 @@ const MessageInput = ({filePath, setFilePath}) =>  {
                                     fontSize: "15px",
                                     borderRadius: "16px",
                                     paddingTop: "8px",
-                                    paddingBottom: "8px",
+                                    paddingBottom: "7px",
                                 },
                             }}
                             fullWidth
