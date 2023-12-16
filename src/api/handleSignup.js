@@ -1,4 +1,5 @@
-const apiUrl = process.env.REACT_APP_BASE_URL;
+import {baseUrl} from "../utils/base";
+
 export const handleSignup = async (name, description, email, password) => {
     const requestOptions = {
         method: 'POST',
@@ -14,7 +15,7 @@ export const handleSignup = async (name, description, email, password) => {
     };
 
     try {
-        const response = await fetch(`${apiUrl}/v1/user`, requestOptions);
+        const response = await fetch(`${baseUrl}/v1/user`, requestOptions);
         const result = await response.json();
         if (response.ok) {
             return { success: true, data: result };

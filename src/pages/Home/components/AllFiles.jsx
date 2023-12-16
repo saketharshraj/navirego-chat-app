@@ -1,4 +1,4 @@
-import {Avatar, Box, CircularProgress, Dialog, Grid, useMediaQuery} from "@mui/material";
+import {Box, CircularProgress, Dialog, Grid, useMediaQuery} from "@mui/material";
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import {useEffect, useState} from "react";
 
@@ -6,9 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 import {getAllFiles} from "../../../api/getAllFiles";
 import {useSnackbar} from "notistack";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import Bot from "../../../assets/logo-light.png";
-import Profile from "../../../assets/profile.jpg";
 
 
 const AllFiles = ({current}) =>  {
@@ -49,7 +46,7 @@ const AllFiles = ({current}) =>  {
         }
     };
 
-    // const isMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
 
     return (
@@ -61,20 +58,19 @@ const AllFiles = ({current}) =>  {
             </IconButton>
 
             <Dialog
-                // fullScreen
+                fullScreen={isMobile}
                 maxWidth={"md"}
                 open={modal}
                 onClose={handleClose}
             >
                 <Box
-                    px={3}
-                    py={3}
+                    pt={2} pb={3}
                     bgcolor={"#FFF"}
                     display={"flex"}
                     flexDirection={"column"}
                     justifyContent={"center"}
                     alignItems={"center"}
-                    width={"700px"}
+                    width={isMobile ? "100%" : "700px"}
                 >
                     <Box
                         width={"100%"}
@@ -82,7 +78,8 @@ const AllFiles = ({current}) =>  {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "space-between",
-                        }}
+                            borderBottom: "1px solid #333"
+                        }} pb={1.5} pl={3} pr={2}
                     >
                         <Box fontWeight={600} fontSize={'24px'}>
                             Files
@@ -91,7 +88,7 @@ const AllFiles = ({current}) =>  {
                             <CloseIcon sx={{color: 'red'}} />
                         </IconButton>
                     </Box>
-                    <Box width={"100%"} mt={4}>
+                    <Box width={"100%"} mt={2} px={3}>
                         <Grid container spacing={4}>
                             {files.filter(file => file.fileUrl)?.map((each, index) => (
                                 <Grid key={index} item xs={6} md={4} height={"100%"}>

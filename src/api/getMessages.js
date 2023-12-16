@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5001/v1/message';
+import {baseUrl} from "../utils/base";
 
 export const getAllMessages = async (chatId, skip, limit) => {
     const myHeaders = new Headers();
@@ -10,7 +10,7 @@ export const getAllMessages = async (chatId, skip, limit) => {
         redirect: 'follow',
     };
 
-    const url = `${apiUrl}?chatId=${chatId}&$limit=${limit}&$skip=${skip}&$sort[createdAt]=-1`;
+    const url = `${baseUrl}/v1/message?chatId=${chatId}&$limit=${limit}&$skip=${skip}&$sort[createdAt]=-1`;
 
     try {
         const response = await fetch(url, requestOptions);

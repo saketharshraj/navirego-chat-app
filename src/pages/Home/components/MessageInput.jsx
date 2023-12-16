@@ -40,7 +40,6 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
                 setLoading(true);
                 const uploadResult = await uploadFile(selectedFile);
 
-                console.log(uploadResult)
                 setFilePath(uploadResult.data.path[0])
 
                 if (!uploadResult.success) {
@@ -61,6 +60,8 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
             messageType: filePath === null ? 120 : (query === "") ? 121 : 122,
             fileUrl: filePath,
         }
+
+        setQuery("");
 
         setMessageList((prevList) =>
             [userInput, ...prevList]
@@ -93,8 +94,6 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
         } finally {
             setLoading(false);
         }
-
-        setQuery("");
         handleDelete();
     };
 
@@ -137,7 +136,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
                                             )
                                         }
 
-                                        <IconButton onClick={handleSendMessage} disabled={loading || query.length === 0}>
+                                        <IconButton onClick={handleSendMessage} disabled={loading && query.length === 0}>
                                             <ArrowUpwardIcon color={"secondary"} />
                                         </IconButton>
                                     </Box>

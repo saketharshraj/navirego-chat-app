@@ -1,5 +1,4 @@
 import {Box, Avatar, Menu, MenuItem, Dialog, Hidden} from "@mui/material";
-import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import {useLocation, useNavigate} from "react-router-dom";
 
 import Logo from '../assets/logo-dark.png'

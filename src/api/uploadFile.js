@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5001/v1/upload-file';
+import {baseUrl} from "../utils/base";
 
 export const uploadFile = async (file) => {
     const myHeaders = new Headers();
@@ -15,7 +15,7 @@ export const uploadFile = async (file) => {
     };
 
     try {
-        const response = await fetch(apiUrl, requestOptions);
+        const response = await fetch(`${baseUrl}/v1/upload-file`, requestOptions);
         const res = await response.json();
         return { success: res.result, data: res };
     } catch (error) {

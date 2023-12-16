@@ -85,7 +85,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
                     id="scrollableDiv"
                 >
                     {
-                        current?._id ? (
+                        messageListLength > 0 ? (
                             <InfiniteScroll
                                 dataLength={messageList.length}
                                 next={fetchMoreData}
@@ -96,7 +96,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
                                 scrollableTarget="scrollableDiv"
                             >
                                 {messageList?.map((message, index) => (
-                                    <Box mb={5} width={"100%"} display={"flex"}>
+                                    <Box key={`${index}${message?.createdAt}`} mb={5} width={"100%"} display={"flex"}>
                                         {
                                             message?.createdBy === botId ? (
                                                 <Box pt={1} pb={0.95} pl={1.25} pr={1.3} width={"30px"} height={"30px"} borderRadius={"15px"} display={"flex"} alignItems={"center"} justifyContent={"Center"} bgcolor={"#000"}>

@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5001/v1/chat?$sort[createdAt]=-1';
+import {baseUrl} from "../utils/base";
 
 export const getAllChats = async () => {
     const myHeaders = new Headers();
@@ -11,7 +11,7 @@ export const getAllChats = async () => {
     };
 
     try {
-        const response = await fetch(apiUrl, requestOptions);
+        const response = await fetch(`${baseUrl}/v1/chat?$sort[createdAt]=-1`, requestOptions);
         const result = await response.json();
         return { success: true, data: result.data };
     } catch (error) {

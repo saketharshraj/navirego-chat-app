@@ -1,4 +1,5 @@
-const apiUrl = "http://localhost:5001";
+import {baseUrl} from "../utils/base";
+
 export const handleLogin = async (email, password) => {
     const requestOptions = {
         method: 'POST',
@@ -13,7 +14,7 @@ export const handleLogin = async (email, password) => {
     };
 
     try {
-        const response = await fetch(`${apiUrl}/authentication`, requestOptions);
+        const response = await fetch(`${baseUrl}/authentication`, requestOptions);
         const result = await response.json();
         if (response.ok) {
             return { success: true, data: result };

@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5001/v1/message';
+import {baseUrl} from "../utils/base";
 
 export const sendMessage = async (message, messageType, chatId, fileUrl) => {
     const myHeaders = new Headers();
@@ -25,7 +25,7 @@ export const sendMessage = async (message, messageType, chatId, fileUrl) => {
     };
 
     try {
-        const response = await fetch(apiUrl, requestOptions);
+        const response = await fetch(`${baseUrl}/v1/message`, requestOptions);
         const result = await response.json();
         return { success: true, data: result };
     } catch (error) {
