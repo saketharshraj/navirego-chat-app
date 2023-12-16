@@ -99,6 +99,10 @@ const MessageInput = ({current, setIsSending, messageListLength, setMessageList,
         handleDelete();
     };
 
+    useEffect(() => {
+        console.log(loading, query, query.length, filePath)
+    }, [loading, query, filePath])
+
     return (
         <>
             <Box width={"100%"} position={"absolute"} bottom={0} left={0} sx={{backgroundColor: "#FFF"}}>
@@ -117,7 +121,7 @@ const MessageInput = ({current, setIsSending, messageListLength, setMessageList,
                                 setQuery(event.target.value);
                             }}
                             onKeyDown={(event) => {
-                                if(loading && (query.length === 0 || filePath === null)) return;
+                                if((query.length === 0 && filePath === null) || loading) return;
                                 if (event.key === 'Enter') handleSendMessage()
                             }}
                             color={"secondary"}
@@ -139,7 +143,7 @@ const MessageInput = ({current, setIsSending, messageListLength, setMessageList,
                                             )
                                         }
 
-                                        <IconButton onClick={handleSendMessage} disabled={loading && (query.length === 0 || filePath === null)}>
+                                        <IconButton onClick={handleSendMessage} disabled={(query.length === 0 && filePath === null) || loading}>
                                             <ArrowUpwardIcon color={"secondary"} />
                                         </IconButton>
                                     </Box>

@@ -111,6 +111,8 @@ const AllFiles = ({ current }) => {
                                         height={'100%'}
                                     >
                                         <FileMessage
+                                            allfiles={true}
+                                            message={each?.message}
                                             fileUrl={each?.fileUrl}
                                             fileName={'File'}
                                         />

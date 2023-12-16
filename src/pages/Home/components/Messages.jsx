@@ -177,7 +177,7 @@ const Messages = ({ current, chatLoading, setChatLoading }) => {
                                     )}
                                     <Box ml={1.5}>
                                         <Box pt={0.3} pb={0.5} fontWeight={700}>
-                                            {message.createdBy === botId
+                                            {message?.createdBy === botId
                                                 ? 'Navirego Bot'
                                                 : 'You'}
                                         </Box>
@@ -186,6 +186,7 @@ const Messages = ({ current, chatLoading, setChatLoading }) => {
                                         </Box>
                                         {message?.fileUrl && (
                                             <FileMessage
+                                                message={message.message}
                                                 fileUrl={message.fileUrl}
                                                 fileName={'File'}
                                             />
