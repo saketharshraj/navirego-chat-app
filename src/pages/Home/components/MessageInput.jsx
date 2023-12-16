@@ -182,7 +182,7 @@ const MessageInput = ({
                                         <IconButton
                                             onClick={handleSendMessage}
                                             disabled={
-                                                (query.length === 0 &&
+                                                (query.trim().length === 0 &&
                                                     filePath === null) ||
                                                 loading
                                             }
