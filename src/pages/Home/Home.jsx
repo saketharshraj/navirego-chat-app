@@ -4,7 +4,6 @@ import {Grid, Hidden, Box} from "@mui/material";
 import Navbar from "../../components/Navbar";
 import AllChats from "./components/AllChats";
 import NewChatButton from "./components/NewChatButton";
-import MessageInput from "./components/MessageInput";
 import Messages from "./components/Messages";
 
 const Home = () =>  {

@@ -6,10 +6,9 @@ import Profile from "../../../assets/profile.jpg";
 import Bot from "../../../assets/logo-light.png";
 import MessageInput from "./MessageInput";
 import ChatLoader from "./ChatLoader";
+import {botId} from "../../../utils/base";
 
 const Messages = ({current, chatLoading, setChatLoading}) =>  {
-
-    const botId = "657b1e8411b71728f5db6769";
 
     const [hasMore, setHasMore] = useState(true);
     const [offset, setOffset] = useState(0);
@@ -53,6 +52,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
 
     useEffect(() => {
         setOffset(0);
+        setChatLoading(false)
         setTotalMessageLength(null);
         setMessageListLength(0);
         setMessageList([]);
@@ -85,12 +85,15 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
                     id="scrollableDiv"
                 >
                     {
+                        chatLoading && <ChatLoader />
+                    }
+                    {
                         messageListLength > 0 ? (
                             <InfiniteScroll
                                 dataLength={messageList.length}
                                 next={fetchMoreData}
                                 hasMore={hasMore}
-                                loader={<ChatLoader />}
+                                loader={""}
                                 style={{ display: 'flex', flexDirection: 'column-reverse' }}
                                 inverse={true}
                                 scrollableTarget="scrollableDiv"
@@ -125,14 +128,21 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
                                 ))}
                             </InfiniteScroll>
                         ) : (
-                            <Box px={4} width={"100%"} height={"100vh"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-                                <Box p={2} width={"70"} height={"70px"} borderRadius={"35px"} display={"flex"} alignItems={"center"} justifyContent={"Center"} bgcolor={"#000"}>
-                                    <img src={Bot} width={'40px'} />
-                                </Box>
-                                <Box fontWeight={700} fontSize={"24px"} mt={2} textAlign={"center"}>
-                                    How can I help you today?
-                                </Box>
-                            </Box>
+                            <>
+                                {
+                                    !current?._id && (
+                                        <Box px={4} width={"100%"} height={"100vh"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+                                            <Box p={2} width={"70"} height={"70px"} borderRadius={"35px"} display={"flex"} alignItems={"center"} justifyContent={"Center"} bgcolor={"#000"}>
+                                                <img src={Bot} width={'40px'} />
+                                            </Box>
+                                            <Box fontWeight={700} fontSize={"24px"} mt={2} textAlign={"center"}>
+                                                How can I help you today?
+                                            </Box>
+                                        </Box>
+                                    )
+                                }
+
+                            </>
                         )
                     }
 

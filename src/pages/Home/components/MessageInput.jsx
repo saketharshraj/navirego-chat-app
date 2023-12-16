@@ -136,7 +136,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
                                             )
                                         }
 
-                                        <IconButton onClick={handleSendMessage} disabled={loading && query.length === 0}>
+                                        <IconButton onClick={handleSendMessage} disabled={loading && (query.length === 0 || filePath === null)}>
                                             <ArrowUpwardIcon color={"secondary"} />
                                         </IconButton>
                                     </Box>
