@@ -1,4 +1,4 @@
-import {Box, Avatar, Menu, MenuItem, Dialog} from "@mui/material";
+import {Box, Avatar, Menu, MenuItem, Dialog, Hidden} from "@mui/material";
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -8,10 +8,13 @@ import {useRef, useState} from "react";
 import {navbarMenu} from "../constants/navbarMenu";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
+import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 import AllFiles from "../pages/Home/components/AllFiles";
+import NewChatButton from "../pages/Home/components/NewChatButton";
+import AllChats from "../pages/Home/components/AllChats";
 
 
-const Navbar = ({current}) =>  {
+const Navbar = ({chats, setChats, current, setCurrent, chatLoading}) =>  {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -48,8 +51,13 @@ const Navbar = ({current}) =>  {
                 </Box>
 
                 <Box display={"flex"} alignItems={"center"}>
-                   <AllFiles current={current} />
-                    <Box ml={4} ref={anchorRef} onClick={handleToggle}>
+                    <Hidden mdUp>
+                        <IconButton onClick={handleClickOpen}>
+                            <ChatOutlinedIcon color={"secondary"} />
+                        </IconButton>
+                    </Hidden>
+                    <AllFiles current={current} />
+                    <Box ml={{xs: 2, md: 4}} ref={anchorRef} onClick={handleToggle}>
                         <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2'}} />
                     </Box>
                     <Menu
@@ -108,6 +116,13 @@ const Navbar = ({current}) =>  {
                             <CloseIcon />
                         </IconButton>
                     </Box>
+
+                    <NewChatButton setCurrent={setCurrent} setModal={setModal} />
+                    <AllChats
+                        chats={chats} setChats={setChats}
+                        current={current} setCurrent={setCurrent}
+                        chatLoading={chatLoading} setModal={setModal}
+                    />
 
                 </Box>
 

@@ -3,7 +3,7 @@ import {Box, CircularProgress} from "@mui/material";
 
 import {getAllChats} from "../../../api/getAllChats";
 
-const AllChats = ({chats, setChats, current, setCurrent, chatLoading, setOpen}) =>  {
+const AllChats = ({chats, setChats, current, setCurrent, chatLoading, setModal}) =>  {
 
     const [allChatsLoading, setAllChatsLoading] = useState(false);
 
@@ -56,7 +56,7 @@ const AllChats = ({chats, setChats, current, setCurrent, chatLoading, setOpen}) 
                                             onClick={() => {
                                                 if(!chatLoading) setCurrent(each)
                                                 if(!current?._id) fetchData();
-                                                // if(setOpen) setOpen(false)
+                                                if(setModal) setModal(false)
                                             }}
                                             className="chat-title"
                                         >

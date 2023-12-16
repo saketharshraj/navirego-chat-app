@@ -72,7 +72,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
         <>
             <Container maxWidth={"md"}>
                 <Box
-                    pt={8} pb={15} px={4}
+                    pt={{xs: 10, md: 8}} pb={{xs: 10, md: 15}} px={{xs: 2, md: 4}}
                     width={"100%"} height={"100vh"}
                     display={'flex'} flexDirection={'column-reverse'}
                     sx={{
@@ -129,7 +129,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
                                 <Box p={2} width={"70"} height={"70px"} borderRadius={"35px"} display={"flex"} alignItems={"center"} justifyContent={"Center"} bgcolor={"#000"}>
                                     <img src={Bot} width={'40px'} />
                                 </Box>
-                                <Box fontWeight={700} fontSize={"24px"} mt={2}>
+                                <Box fontWeight={700} fontSize={"24px"} mt={2} textAlign={"center"}>
                                     How can I help you today?
                                 </Box>
                             </Box>
@@ -138,7 +138,6 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
 
                 </Box>
             </Container>
-
 
             <MessageInput
                 current={current} messageListLength={messageListLength} setMessageList={setMessageList} setMessageListLength={setMessageListLength} setTotalMessageLength={setTotalMessageLength}

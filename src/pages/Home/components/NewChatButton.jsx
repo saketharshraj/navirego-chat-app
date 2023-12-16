@@ -3,7 +3,7 @@ import Logo from "../../../assets/logo-light.png";
 
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
-const NewChatButton = ({setCurrent}) =>  {
+const NewChatButton = ({setCurrent, setModal}) =>  {
 
     return (
         <>
@@ -20,6 +20,7 @@ const NewChatButton = ({setCurrent}) =>  {
                     }}
                     onClick={() => {
                         setCurrent({})
+                        if(setModal) setModal(false)
                     }}
                     className="chat-title"
                     display={"flex"} alignItems={'center'} justifyContent={'space-between'}

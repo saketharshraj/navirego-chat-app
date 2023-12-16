@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {Grid, Hidden, Box, Container} from "@mui/material";
+import { useState} from "react";
+import {Grid, Hidden, Box} from "@mui/material";
 
 import Navbar from "../../components/Navbar";
 import AllChats from "./components/AllChats";
@@ -13,10 +13,6 @@ const Home = () =>  {
 
     const [current, setCurrent] = useState({})
     const [chatLoading, setChatLoading] = useState(false)
-
-    useEffect(() => {
-        console.log(current)
-    }, [current]);
 
     return (
         <>
@@ -36,7 +32,11 @@ const Home = () =>  {
 
                 <Grid item xs={12} md={9.5}>
                     <Box width={"100%"} height={"100vh"} position={"relative"}>
-                        <Navbar current={current} />
+                        <Navbar
+                            chats={chats} setChats={setChats}
+                            current={current} setCurrent={setCurrent}
+                            chatLoading={chatLoading}
+                        />
                         <Messages
                             current={current}
                             chatLoading={chatLoading} setChatLoading={setChatLoading}
