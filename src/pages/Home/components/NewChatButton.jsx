@@ -26,7 +26,7 @@ const NewChatButton = ({setCurrent, setModal}) =>  {
                     display={"flex"} alignItems={'center'} justifyContent={'space-between'}
                 >
                     <Box display={"flex"} alignItems={'center'}>
-                        <img src={Logo} width={'25px'} />
+                        <img src={Logo} width={'25px'} alt='Logo' />
                         <Box ml={2}>New Chat</Box>
                     </Box>
                     <EditNoteIcon />

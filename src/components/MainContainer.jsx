@@ -52,7 +52,7 @@ const MainContainer = ({children, current, setCurrent}) => {
                                     )
                                 }
                                 <Box display={'flex'} alignItems={'center'}>
-                                    <img src={Logo} width={'40px'} />
+                                    <img src={Logo} width={'40px'} alt='Logo' />
                                     <Box fontWeight={550} fontSize={'18px'} mt={0.5} ml={1}>
                                         Navirego Chat
                                     </Box>
@@ -62,7 +62,7 @@ const MainContainer = ({children, current, setCurrent}) => {
                         </Hidden>
                         <Hidden mdDown>
                             <Box display={'flex'} alignItems={'center'} mb={4}>
-                                <img src={Logo} width={'40px'} />
+                                <img src={Logo} width={'40px'} alt='Logo'/>
                                 <Box fontWeight={550} fontSize={'18px'} mt={0.5} ml={1}>
                                     Navirego Chat
                                 </Box>

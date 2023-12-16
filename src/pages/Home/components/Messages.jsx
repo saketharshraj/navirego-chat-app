@@ -162,7 +162,7 @@ const Messages = ({ current, chatLoading, setChatLoading }) => {
                                             justifyContent={'Center'}
                                             bgcolor={'#000'}
                                         >
-                                            <img src={Bot} width={'17px'} />
+                                            <img src={Bot} width={'17px'} alt='Bot Logo'/>
                                         </Box>
                                     ) : (
                                         <Avatar
@@ -217,7 +217,7 @@ const Messages = ({ current, chatLoading, setChatLoading }) => {
                                         justifyContent={'Center'}
                                         bgcolor={'#000'}
                                     >
-                                        <img src={Bot} width={'40px'} />
+                                        <img src={Bot} width={'40px'} alt='Bot Logo'/>
                                     </Box>
                                     <Box
                                         fontWeight={700}
