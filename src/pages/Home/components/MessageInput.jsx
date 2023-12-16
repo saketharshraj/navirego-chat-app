@@ -107,7 +107,7 @@ const MessageInput = ({current, setIsSending, messageListLength, setMessageList,
                         <input
                             type="file"
                             ref={fileInputRef}
-                            accept="image/*"
+                            // accept="image/*"
                             style={{ display: 'none' }}
                             onChange={handleFileInputChange}
                         />
