@@ -99,10 +99,6 @@ const MessageInput = ({current, setIsSending, messageListLength, setMessageList,
         handleDelete();
     };
 
-    useEffect(() => {
-        console.log(loading, query, query.length, filePath)
-    }, [loading, query, filePath])
-
     return (
         <>
             <Box width={"100%"} position={"absolute"} bottom={0} left={0} sx={{backgroundColor: "#FFF"}}>
