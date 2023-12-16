@@ -5,6 +5,7 @@ import {getAllMessages} from "../../../api/getMessages";
 import Profile from "../../../assets/profile.jpg";
 import Bot from "../../../assets/logo-light.png";
 import MessageInput from "./MessageInput";
+import ChatLoader from "./ChatLoader";
 
 const Messages = ({current, chatLoading, setChatLoading}) =>  {
 
@@ -18,7 +19,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
 
     const limit = 10;
 
-    const fetchData = async () => {
+    const fetchData = async (initial) => {
         if (!current?._id) {
             setHasMore(false);
             return;
@@ -26,14 +27,22 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
 
         try {
             setChatLoading(true);
-            const response = await getAllMessages(current?._id, offset, limit);
+            const response = await getAllMessages(current?._id, initial ? 0 :offset, limit);
 
             if (response.success) {
-                setMessageList((prevList) => [...prevList, ...response?.data?.data]);
-                setTotalMessageLength(response.data.total);
-                setOffset(offset + response.data.data.length);
-                setHasMore(messageListLength + response.data.data.length <= response.data.total);
-                setMessageListLength(messageListLength + response.data.data.length)
+                if(initial){
+                    setMessageList([...response?.data?.data]);
+                    setOffset(0 + response.data.data.length);
+                    setTotalMessageLength(response.data.total);
+                    setHasMore(0 + response.data.data.length <= response.data.total);
+                    setMessageListLength(0 + response.data.data.length)
+                } else {
+                    setMessageList((prevList) => [...prevList, ...response?.data?.data]);
+                    setOffset(offset + response.data.data.length);
+                    setTotalMessageLength(response.data.total);
+                    setHasMore(messageListLength + response.data.data.length <= response.data.total);
+                    setMessageListLength(messageListLength + response.data.data.length)
+                }
             } else {
                 console.error('Error fetching messages:', response.error);
             }
@@ -48,7 +57,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
         setMessageListLength(0);
         setMessageList([]);
         setHasMore(true);
-        fetchData()
+        fetchData(true)
     }, [current]);
 
     const fetchMoreData = () => {
@@ -75,45 +84,58 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
                     }}
                     id="scrollableDiv"
                 >
-                    <InfiniteScroll
-                        dataLength={messageList.length}
-                        next={fetchMoreData}
-                        hasMore={hasMore}
-                        loader={<h4>Loading...</h4>}
-                        style={{ display: 'flex', flexDirection: 'column-reverse' }}
-                        inverse={true}
-                        scrollableTarget="scrollableDiv"
-                    >
-                        {messageList.map((message, index) => (
-                            <Box mb={5} width={"100%"} display={"flex"}>
-                                {
-                                    message?.createdBy === botId ? (
-                                        <Box pt={1} pb={0.95} pl={1.25} pr={1.3} width={"30px"} height={"30px"} borderRadius={"15px"} display={"flex"} alignItems={"center"} justifyContent={"Center"} bgcolor={"#000"}>
-                                            <img src={Bot} width={'17px'} />
-                                        </Box>
-                                    ) : (
-                                        <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2', width: 30, height: 30}} />
-                                    )
-                                }
-                                <Box ml={1.5}>
-                                    <Box pt={0.3} pb={0.5} fontWeight={700}>
+                    {
+                        current?._id ? (
+                            <InfiniteScroll
+                                dataLength={messageList.length}
+                                next={fetchMoreData}
+                                hasMore={hasMore}
+                                loader={<ChatLoader />}
+                                style={{ display: 'flex', flexDirection: 'column-reverse' }}
+                                inverse={true}
+                                scrollableTarget="scrollableDiv"
+                            >
+                                {messageList?.map((message, index) => (
+                                    <Box mb={5} width={"100%"} display={"flex"}>
                                         {
-                                            message.createdBy === botId ? "Navirego Bot" : "You"
+                                            message?.createdBy === botId ? (
+                                                <Box pt={1} pb={0.95} pl={1.25} pr={1.3} width={"30px"} height={"30px"} borderRadius={"15px"} display={"flex"} alignItems={"center"} justifyContent={"Center"} bgcolor={"#000"}>
+                                                    <img src={Bot} width={'17px'} />
+                                                </Box>
+                                            ) : (
+                                                <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2', width: 30, height: 30}} />
+                                            )
                                         }
+                                        <Box ml={1.5}>
+                                            <Box pt={0.3} pb={0.5} fontWeight={700}>
+                                                {
+                                                    message.createdBy === botId ? "Navirego Bot" : "You"
+                                                }
+                                            </Box>
+                                            <Box fontWeight={500}>
+                                                {message?.message}
+                                            </Box>
+                                            {
+                                                message?.fileUrl && (
+                                                    <img src={message.fileUrl} alt={"img"} style={{maxWidth: "100%", marginTop: "10px"}} />
+                                                )
+                                            }
+                                        </Box>
                                     </Box>
-                                    <Box fontWeight={500}>
-                                        {message?.message}
-                                    </Box>
-                                    {
-                                        message?.fileUrl && (
-                                            <img src={message.fileUrl} alt={"img"} style={{maxWidth: "100%", marginTop: "10px"}} />
-                                        )
-                                    }
+                                ))}
+                            </InfiniteScroll>
+                        ) : (
+                            <Box px={4} width={"100%"} height={"100vh"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+                                <Box p={2} width={"70"} height={"70px"} borderRadius={"35px"} display={"flex"} alignItems={"center"} justifyContent={"Center"} bgcolor={"#000"}>
+                                    <img src={Bot} width={'40px'} />
+                                </Box>
+                                <Box fontWeight={700} fontSize={"24px"} mt={2}>
+                                    How can I help you today?
                                 </Box>
                             </Box>
-                        ))}
+                        )
+                    }
 
-                    </InfiniteScroll>
                 </Box>
             </Container>
 

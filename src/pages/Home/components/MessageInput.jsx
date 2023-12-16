@@ -1,4 +1,4 @@
-import {useState, useRef} from "react";
+import {useState, useRef, useEffect} from "react";
 import {Box, Container, TextField, IconButton, CircularProgress, Chip} from "@mui/material";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -11,7 +11,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
 
     const [query, setQuery] = useState("")
     const [filePath, setFilePath] = useState(null);
-    const [chatId, setChatId] = useState(current?._id || "",);
+    const [chatId, setChatId] = useState(current?._id || "");
 
     const fileInputRef = useRef(null);
     const [fileName, setFileName] = useState('');
@@ -21,6 +21,12 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
         setFileName('');
         setFilePath(null)
     };
+
+    useEffect(() => {
+        setChatId(current?._id || "");
+        setQuery("");
+        handleDelete()
+    }, [current]);
 
     const handleFileChange = () => {
         fileInputRef.current.click();
@@ -69,6 +75,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
                 filePath
             );
 
+            if((!chatId.length > 0)) setChatId(messageResult.data.chatId)
 
             setTotalMessageLength(messageResult.data.messagesCount);
             setMessageListLength(messageListLength + 2);
@@ -108,6 +115,9 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
                             onChange={(event) => {
                                 setQuery(event.target.value);
                             }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') handleSendMessage()
+                            }}
                             color={"secondary"}
                             multiline
                             variant="outlined"
@@ -127,7 +137,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
                                             )
                                         }
 
-                                        <IconButton onClick={handleSendMessage} disabled={loading}>
+                                        <IconButton onClick={handleSendMessage} disabled={loading || query.length === 0}>
                                             <ArrowUpwardIcon color={"secondary"} />
                                         </IconButton>
                                     </Box>

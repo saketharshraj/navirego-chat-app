@@ -7,22 +7,21 @@ const AllChats = ({chats, setChats, current, setCurrent, chatLoading, setOpen}) 
 
     const [allChatsLoading, setAllChatsLoading] = useState(false);
 
+    const fetchData = async () => {
+        try {
+            setAllChatsLoading(true);
+            const response = await getAllChats();
+            if (response.success) {
+                setChats(response.data)
+            } else {
+                console.error('Error fetching data:', response.error);
+            }
+        } finally {
+            setAllChatsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setAllChatsLoading(true);
-                const response = await getAllChats();
-                if (response.success) {
-                    setChats(response.data)
-                } else {
-                    console.error('Error fetching data:', response.error);
-                }
-            } finally {
-                setAllChatsLoading(false);
-            }
-        };
-
         fetchData();
     }, []);
 
@@ -47,7 +46,7 @@ const AllChats = ({chats, setChats, current, setCurrent, chatLoading, setOpen}) 
                                             width={"100%"} mb={0.5}
                                             py={"8px"} px={"12px"}
                                             borderRadius={"8px"}
-                                            color={"#FFF"}
+                                            color={"#FFF"} bgcolor={each._id === current?._id ? "hsla(0,0%,100%,.1)" : ""}
                                             sx={{
                                                 cursor: "pointer",
                                                 "&:hover": {
@@ -56,6 +55,7 @@ const AllChats = ({chats, setChats, current, setCurrent, chatLoading, setOpen}) 
                                             }}
                                             onClick={() => {
                                                 if(!chatLoading) setCurrent(each)
+                                                if(!current?._id) fetchData();
                                                 // if(setOpen) setOpen(false)
                                             }}
                                             className="chat-title"

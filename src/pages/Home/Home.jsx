@@ -11,7 +11,7 @@ const Home = () =>  {
 
     const [chats, setChats] = useState([])
 
-    const [current, setCurrent] = useState(null)
+    const [current, setCurrent] = useState({})
     const [chatLoading, setChatLoading] = useState(false)
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const Home = () =>  {
                 <Hidden mdDown>
                     <Grid item xs={0} md={2.5}>
                         <Box width={"100%"} height={"100vh"} position={"relative"}>
-                            <NewChatButton />
+                            <NewChatButton setCurrent={setCurrent} />
                             <AllChats
                                 chats={chats} setChats={setChats}
                                 current={current} setCurrent={setCurrent}
@@ -36,12 +36,11 @@ const Home = () =>  {
 
                 <Grid item xs={12} md={9.5}>
                     <Box width={"100%"} height={"100vh"} position={"relative"}>
-                        <Navbar />
+                        <Navbar current={current} />
                         <Messages
                             current={current}
                             chatLoading={chatLoading} setChatLoading={setChatLoading}
                         />
-
                     </Box>
                 </Grid>
             </Grid>

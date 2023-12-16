@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5001/v1/chat';
+const apiUrl = 'http://localhost:5001/v1/chat?$sort[createdAt]=-1';
 
 export const getAllChats = async () => {
     const myHeaders = new Headers();

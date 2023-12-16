@@ -1,4 +1,4 @@
-import {Box, Avatar, Menu, MenuItem} from "@mui/material";
+import {Box, Avatar, Menu, MenuItem, Dialog} from "@mui/material";
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -6,8 +6,12 @@ import Logo from '../assets/logo-dark.png'
 import Profile from '../assets/profile.jpg'
 import {useRef, useState} from "react";
 import {navbarMenu} from "../constants/navbarMenu";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from '@mui/icons-material/Close';
+import AllFiles from "../pages/Home/components/AllFiles";
 
-const Navbar = () =>  {
+
+const Navbar = ({current}) =>  {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -24,6 +28,15 @@ const Navbar = () =>  {
         setOpen(false);
     };
 
+
+    const [modal, setModal] = useState(false);
+    const handleClickOpen = () => {
+        setModal(true);
+    };
+    const handleClose = () => {
+        setModal(false);
+    };
+
     return (
         <>
             <Box zIndex={1000} bgcolor={"hsla(0,0%,100%,.95)"} p={2} pb={1} display={'flex'} alignItems={'center'} justifyContent={'space-between'} width={"100%"} position={"absolute"} top={0} left={0}>
@@ -35,7 +48,7 @@ const Navbar = () =>  {
                 </Box>
 
                 <Box display={"flex"} alignItems={"center"}>
-                    <FileOpenOutlinedIcon color={"secondary"} />
+                   <AllFiles current={current} />
                     <Box ml={4} ref={anchorRef} onClick={handleToggle}>
                         <Avatar src={Profile} alt={'Profile'} sx={{background: '#2026d2'}} />
                     </Box>
@@ -83,6 +96,22 @@ const Navbar = () =>  {
                     </Menu>
                 </Box>
             </Box>
+
+            <Dialog
+                fullScreen
+                open={modal}
+                onClose={handleClose}
+            >
+                <Box width={"100%"} position={"relative"}>
+                    <Box position={"absolute"} top={"5px"} right={"5px"}>
+                        <IconButton onClick={handleClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
+
+                </Box>
+
+            </Dialog>
         </>
     );
 }
