@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Avatar, Box, Container} from "@mui/material";
+import {Avatar, Box, Container, Skeleton} from "@mui/material";
 import {getAllMessages} from "../../../api/getMessages";
 import Profile from "../../../assets/profile.jpg";
 import Bot from "../../../assets/logo-light.png";
@@ -15,6 +15,10 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
     const [messageList, setMessageList] = useState([]);
     const [messageListLength, setMessageListLength] = useState(0);
     const [totalMessageLength, setTotalMessageLength] = useState(null);
+
+
+    const [isSending, setIsSending] = useState(false);
+
 
     const limit = 10;
 
@@ -98,6 +102,15 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
                                 inverse={true}
                                 scrollableTarget="scrollableDiv"
                             >
+                                {
+                                    isSending && (
+                                        <Box mb={3} pr={2} width={"100%"} display={"flex"} alignItems={"center"}>
+                                            <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                                            <Box ml={1.5} />
+                                            <Skeleton animation="wave" variant="rounded" width={100} height={30} />
+                                        </Box>
+                                    )
+                                }
                                 {messageList?.map((message, index) => (
                                     <Box key={`${index}${message?.createdAt}`} mb={5} width={"100%"} display={"flex"}>
                                         {
@@ -150,7 +163,7 @@ const Messages = ({current, chatLoading, setChatLoading}) =>  {
             </Container>
 
             <MessageInput
-                current={current} messageListLength={messageListLength} setMessageList={setMessageList} setMessageListLength={setMessageListLength} setTotalMessageLength={setTotalMessageLength}
+                current={current} setIsSending={setIsSending} messageListLength={messageListLength} setMessageList={setMessageList} setMessageListLength={setMessageListLength} setTotalMessageLength={setTotalMessageLength}
             />
         </>
     );

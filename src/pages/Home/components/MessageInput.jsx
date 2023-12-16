@@ -5,7 +5,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import {useSnackbar} from "notistack";
 import {uploadFile} from "../../../api/uploadFile";
 import {sendMessage} from "../../../api/sendMessage";
-const MessageInput = ({current, messageListLength, setMessageList, setMessageListLength, setTotalMessageLength}) =>  {
+const MessageInput = ({current, setIsSending, messageListLength, setMessageList, setMessageListLength, setTotalMessageLength}) =>  {
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -69,6 +69,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
 
         try {
             setLoading(true);
+            setIsSending(true)
             const messageResult = await sendMessage(
                 query,
                 filePath === null ? 120 : (query === "") ? 121 : 122,
@@ -93,6 +94,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
             }
         } finally {
             setLoading(false);
+            setIsSending(false);
         }
         handleDelete();
     };
@@ -115,6 +117,7 @@ const MessageInput = ({current, messageListLength, setMessageList, setMessageLis
                                 setQuery(event.target.value);
                             }}
                             onKeyDown={(event) => {
+                                if(loading && (query.length === 0 || filePath === null)) return;
                                 if (event.key === 'Enter') handleSendMessage()
                             }}
                             color={"secondary"}
